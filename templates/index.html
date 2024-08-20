@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>groupie-tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./static/css/styles.css">
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div class="index">
+        <div class="header">
+            <div class="home">
+                <a href="/" class="custom-link">HOME</a>
+            </div>
+            <div class="about">
+                <a href="#explainAnchor" class="custom-link">ABOUT</a>
+            </div>
+            <div class="contacts">
+                <a href="#footerAnchor" class="custom-link">CONTACTS</a>
+            </div>
+        </div>
+        <div class="groupie-tracker"><strong>groupie-tracker</strong></div>
+        <section id = "explainAnchor">
+        </section>
+        <div class="explain">
+            <div id="imagesE" class="explainImage" onclick="redirect()"></div>
+            <div class="explainText">
+                <div>
+                    Groupie Tracker app works by receiving a specific API and skillfully processing the data contained
+                    in it. The purpose is to use these data to create a website that effectively displays information
+                    about musical groups in a user-friendly form.
+                </div>
+            </div>
+        </div>
+        <div class="search">
+            <div class="input">
+                <input type="text" id="userText" name="userText" oninput="readText()" placeholder="Quick-search">
+            </div>
+        </div>
+        <div class="artists">
+            {{ range . }}
+            <a id="artistBlock" href="/artists/{{.Id}}" class="custom-link" name="{{.Name}}">
+                <div class="artistImage">
+                    <img id="imageConvert" class="imageOfArtist" src="{{.Image}}" loading="lazy" alt="img">
+                    <div id="name" class="name">{{.Name}}</div>
+                </div>
+            </a>
+            {{ end }}
+        </div>
+        <section id = "footerAnchor">
+        </section>
+        <div  class="footer">
+            made by - <strong> Bigxxby, dumitkal </strong>
+            <p>&copy; 2024 groupie-tracker.</p>
+        </div>
+    </div>
+
+    <script>
+        const imagesElements = document.querySelectorAll('.imageOfArtist');
+        imagesElements.forEach(element => {
+            var createImg = document.createElement('img');
+            createImg.src = element.src;
+            createImg.alt = "img";
+            let imagesOfArtists = document.getElementById('imagesE');
+            imagesOfArtists.appendChild(createImg);
+        });
+
+        let currentIndex = 0;
+        let element = document.getElementById('imagesE');
+        let images = element.querySelectorAll("img");
+
+        function showImages() {
+            images.forEach(img => img.style.display = "none");
+            images[currentIndex].style.display = "block";
+            currentIndex = (currentIndex + 1) % images.length;
+        }
+
+        showImages();
+        setInterval(showImages, 1000);
+
+        function redirect() {
+            const randomId = Math.floor(Math.random() * 52) + 1;
+            window.location.href = `artists/${randomId}`;
+        }
+
+        function showArtistMatch(match) {
+            const elements = document.querySelectorAll('#artistBlock')
+            elements.forEach(element => {
+                element.style.display = 'none';
+            });
+            elements.forEach(element => {
+                match.forEach(elementMatch => {
+                    if (element.name === elementMatch) {
+                        element.style.display = 'block';
+                    }
+                });
+            });
+        }
+
+        function readText() {
+            var inputText = document.getElementById('userText');
+            console.log(inputText.value);
+            let matches = findMatch(inputText.value);
+            showArtistMatch(matches);
+        }
+
+        function findMatch(foo) {
+            var ids = document.querySelectorAll('#name');
+            var arrArtists = [];
+            ids.forEach(element => {
+                arrArtists.push(element.textContent.trim());
+            });
+            let mostSimilarArtist = searchArtist(foo, arrArtists);
+            return mostSimilarArtist;
+        }
+
+        function searchArtist(inputString, artistsArray) {
+            inputString = inputString.toLowerCase();
+            const matches = artistsArray.filter(artist => artist.toLowerCase().includes(inputString));
+            return matches;
+        }
+    </script>
+</body>
+
+</html>

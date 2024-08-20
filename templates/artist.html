@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.5"> <!-- Увеличиваем масштаб до 1.5 -->
+	<link rel="stylesheet" href="../static/css/styles.css" href="text/css">
+	<link rel="icon" href="{{.Image}}" type="image/x-icon">
+	<title>{{.Name}}</title>
+
+
+</head>
+
+<body>
+	<div class="index">
+		<div class="id" id="idArtist" name="{{ .Id}}">
+		</div>
+		<div class="header">
+			<div class="home">
+				<a href="/" class="custom-link">
+					HOME
+				</a>
+			</div>
+		</div>
+		<div class="groupie-tracker"> <strong> {{.Name}} </strong></div>
+		<div class="mainBlock">
+			<div class="artistBlock">
+				<div id="arrowLeft" class="arrow">
+				</div>
+				<div class="innerArtistBlock">
+					<img src="{{.Image}}" alt="img">
+					<!-- <div class="arrow" id="arrowRight">
+				</div> -->
+
+
+
+					<div class="artistName">
+						<!-- <h1>{{.Name}}</h1> -->
+					</div>
+				</div>
+				<div class="arrow" id="arrowRight">
+				</div>
+			</div>
+			</h2>
+			<div class="infoBlock">
+				<h2 class = "dates">Members:</h2>
+				{{ range $member := .Members}}
+					<pre class="member">{{$member}}</pre> 
+
+				{{ end }}
+				<h2 class = "dates">First Album: 
+					<pre class="member">{{.FirstAlbum}}</pre>
+				</h2>
+				<h2 class = "dates" >Creation Date: <pre class="member">{{.CreationDate}}</pre></h2>
+
+				<h2 class = "dates">Dates and Locations</h2>
+
+				{{ range $date, $locations := .DateLocations }}
+				<p class="date">{{ $date }}</p>
+				<ul>
+					{{ range $index, $location := $locations }}
+					<li>{{ $location }}</li>
+					{{ end }}
+				</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+				</ul>
+				{{ end }}
+			</div>
+		</div>
+	</div>
+
+
+</body>
+<script>
+	let idAr = document.getElementById('idArtist')
+	let att = parseInt(idAr.getAttribute('name'))
+
+	let left = document.createElement('a')
+	left.href = '/artists/' + String(att - 1)
+	// console.log(left.href)
+	left.textContent = '<'
+	let right = document.createElement('a')
+	right.href = '/artists/' + String(att + 1)
+	right.textContent = '>'
+
+
+	if (att == 1) {
+		left = document.createElement('div')
+		left.textContent = '<'
+		left.style.color = 'darkgrey'
+	} else if (att == 52) {
+		right = document.createElement('div')
+		right.textContent = '>'
+		right.style.color = 'darkgrey'
+
+	}
+
+	let leftArr = document.getElementById('arrowLeft')
+	let rightArr = document.getElementById('arrowRight')
+
+	leftArr.appendChild(left)
+	rightArr.appendChild(right)
+
+
+
+
+
+
+
+</script>
+
+</html>

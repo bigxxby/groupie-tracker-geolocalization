@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.5"> <!-- Увеличиваем масштаб до 1.5 -->
+    <link rel="stylesheet" href="../static/css/styles.css" href="text/css">
+    <link rel="icon" href="static/favicon.ico" type="image/x-icon">
+    <title>{{.Status}}</title>
+
+
+</head>
+
+<body>
+    <div class="index">
+        <div class="header">
+            <div class="home">
+                <a href="/" class="custom-link">
+                    HOME
+                </a>
+            </div>
+            <div class="about">
+                <a href="#" class="custom-link">
+                    ABOUT
+                </a>
+            </div>
+            <div class="contacts">
+                <a href="#" class="custom-link">
+                    CONTACTS
+                </a>
+            </div>
+
+        </div>
+        <div class="groupie-tracker"> <strong> {{.ErrString}} </strong></div>
+        <style>
+            .wrong {
+                /* font-family: 'Roboto', sans-serif; */
+                font-weight: bold;
+                /* font-size: vw;/ */
+            }
+        </style>
+        <div class="wrong">
+
+            something went wrong...
+        </div>
+        <div class="mainBlock">
+            <div class="artistBlock">
+                <style>
+                    .index {
+                        height: 100vh;
+                    }
+
+                    .status {
+                        text-shadow: 10px 6px 4px darkgray;
+                        font-size: 5vw;
+                        text-align: center;
+                        /* white-space: nowrap; */
+                        padding-top: 3%;
+                        padding-bottom: 3%;
+                        /* font-family: 'Roboto', sans-serif; */
+                        font-weight: bold;
+                        font-size: 10vw;
+                    }
+                </style>
+                <div class="status">
+
+                    {{.Status}}
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+</body>
+
+</html>

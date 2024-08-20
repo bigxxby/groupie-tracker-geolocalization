@@ -1,0 +1,535 @@
+body{
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to left bottom, darkgray, gray);
+  display: flex;
+  /* background-color: aqua; */
+  justify-content: space-around;
+  margin: 0px;
+  /* width: 100%; */
+}
+.custom-link {
+  text-decoration: none; 
+  color: #333; 
+  display: flex;
+  justify-content: center;
+  font-weight:bold;
+  opacity: 1;
+  transition: opacity 0.5s ease ;
+}
+/* .custom-link.hidden {
+  opacity: 0;
+} */
+.custom-link.visible {
+  opacity: 1;
+}
+.custom-link:hover {
+  text-decoration:underline;
+}
+.custom-link.hidden {
+  opacity: 0;
+}
+a {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.index {
+  transition: width 0.3s, height 0.3s;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border-style:ridge;
+  background-color: gray;
+  background: linear-gradient(to bottom right, rgb(108, 108, 108) , grey);
+  width: 80%;
+  height: 100%;
+  /* height: 100%; */
+  /* height: 100%; */
+  box-shadow: 0px 4px 10px black;
+}
+.header {
+  background: linear-gradient(to bottom , rgb(108, 108, 108), darkgrey);
+  position: fixed;
+  top:0;
+  z-index: 1000;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-around;
+  background-color: gray;
+  border-style: outset;
+  width: 60%;
+  font-size: 1vw;
+  box-shadow: 3px 3px 3px black;
+}
+
+.groupie-tracker {
+  text-shadow: 10px 6px 4px darkgray;
+  font-size: 5vw;
+  text-align: center;
+  white-space: nowrap;
+  padding-top: 3%;
+  padding-bottom: 3%;
+}
+  
+.search  {
+  display: flex;
+  padding-top: 1%;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  padding-bottom: 1%;
+
+}
+.search input {
+  font-size: 2vw;
+  width: 100%;
+  /* height: 100%; */
+  background-color: darkgray;
+  border-radius: 10px;
+  border-color: black;
+  border-style: inset;
+}
+
+.artists {
+  transition: width 0.5s, height 0.5s;
+  /* transition: width 0.5s ease, height 0.5s ease; */
+  /* transition: all 0.5s ; */
+  /* max-height: 100%; */
+  display: flex;
+  flex-wrap: wrap;
+  width: 78%;
+  border-radius: 10px;
+  justify-content: space-around;
+  border-color: black;
+  
+  padding-bottom: 40px;
+}
+
+.explainImage {
+  width: 100%;
+  height: auto;
+}
+.explainImage img {
+  box-shadow: 3px 3px 3px black;
+  border: 2px inset black;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.explainImage img {
+  transition: all 0.1s;
+
+  border-radius: 30px;
+}
+.explainImage img:hover {
+  transform: scale(1.08);
+  border-radius: 30px;
+  
+}
+
+.member{
+  font-size: 14pt;
+  padding: 0;
+  margin: 0;
+}
+.dates{
+  font-size: 18pt;
+  padding: 15px 0;
+  margin: 0;
+}
+.date{
+  font-size: 16pt;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  border-bottom: 2px solid black;
+}
+
+.explainText {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1vw;
+  padding-left: 30px;
+  text-shadow: 6px 3px 5px darkgray;
+}
+.explainText div{
+  width: 100%;
+}
+.artistImage {
+  padding-left: 30px;
+  padding-right: 30px;
+  display: flex;
+  justify-content: center;
+  
+  align-items: center;
+  flex-direction: column;
+  position: relative; /* Добавляем позиционирование */
+}
+
+.artistImage img,
+.artistImage .name {
+
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s;
+  position: relative; /* Указываем позиционирование */
+  z-index: 1; /* Устанавливаем z-index */
+}
+
+.artistImage:hover img {
+  transform: scale(1.2);
+  border-radius: 40px;
+}
+
+.artistImage:hover .name {
+  transform: scale(1.2) translateY(23px); /* Смещение текста на 10px вниз при увеличении */
+  color: white;
+  /* text-decoration:none; */
+  
+  
+  
+}
+
+
+.artistImage img {
+  border-width: 0.35vw;
+  /* box-shadow: yellow; */
+  max-width: 100%; /* Изображение будет ресайзиться до ширины своего контейнера */
+  height: 100%;   /* Поддерживает соотношение сторон */
+  border-style: ridge;
+}
+@media (max-width: 2100px) {
+  .artistImage img {
+    max-width: 90%;
+  }
+  .artistImage {
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 80%;
+  }
+  
+  
+}
+@media (max-width: 1920px) {
+  .index {
+    width:100%;
+  }
+  .header .custom-link {
+    font-size: 2vw;
+  }
+  .explain .explainText div  {
+    height: 100%;
+    font-size: 2vw;
+
+  }
+  .artists {
+    width: 100%;
+  }
+  
+}
+@media (max-width: 808px) {
+  .index .explain {
+    margin: 0px;
+    width: 88%;
+  }
+  .search input {
+    font-size: 3vw;
+    width: 100%;
+  }
+  .explain .explainText {
+    align-self: center;
+  }
+  
+  .artists .custom-link {
+    width: 25%;
+  }
+  .header .custom-link{
+    font-size: 5vw;
+  }
+  
+  .groupie-tracker {
+    font-size: 10vw;
+    margin-top: 4%; 
+  }
+  .custom-link {
+    justify-content: space-evenly;
+  }
+  
+  .header {
+    width: 100%;
+    font-size: 30px;
+  }
+  
+}
+@media (max-width: 1440px) {
+  .artistImage img {
+    max-width: 60%;
+  }
+  .artistImage {
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+  }
+  
+}
+@media (max-width: 640px) {  .mainBlock {
+  width: 100%;
+  flex-direction: column;
+}
+.artistBlock {
+  align-self: center;
+}
+.infoBlock {
+  width: 100%;
+  /* background-color: antiquewhite; */
+}
+  .artistImage img {
+    max-width: 50%;
+  }
+  .artistImage {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+}
+
+
+
+.name {
+  z-index: 2; /* Устанавливаем больший z-index для текста */
+  text-align: center;  
+  color: black;
+  padding-bottom: 30px;
+  padding-top: 5px;
+  text-decoration: none; 
+  text-shadow: 5px 5px 5px darkgray;
+}
+.explain {
+  box-shadow: 0px 3px 15px black;
+  display: flex;
+  width: 65%;
+  padding: 30px;
+  text-align: center;
+  font-size: 30px;
+  justify-content: space-around;
+  border-style: groove;
+}
+img {
+  box-shadow: 3px 3px 3px black;
+  border-radius: 15px;
+  border: 3px inset black;
+}
+.footer {
+  width: 80%;
+  font-style: italic;
+  border-radius: 15px;
+  padding: 2%;
+  background: linear-gradient(to top right, rgb(108, 108, 108) , darkgray);
+  border-style: groove;
+  border-bottom: none;
+  border-color: black;
+  border-width: 0.2vw;
+  box-shadow: 0px 4px 10px black;
+  font-family: 'Roboto';
+}
+/* artist */
+
+
+.mainBlock {
+  background: linear-gradient(to bottom right, rgb(108, 108, 108) , darkgray);
+  border-width: 0.2vw;
+  box-shadow: 0px 4px 10px black;
+  /* border-style: groove; */
+  /* background-color: aqua; */
+  display: flex;
+  width: 75%;
+  border-radius: 15px;
+  transition: all 0.3s;
+  margin: 0px;
+  justify-content: space-around;
+  border-style: groove;
+  border-color: darkgray , gray ;
+}
+@media (max-width: 1440px) {
+  
+  
+  .mainBlock {
+    width: 100%;
+    flex-direction: column;
+  }
+  .artistBlock {
+    align-self: center;
+  }
+  
+  
+}
+
+.arrow a, 
+.arrow div
+{
+    text-align: center;
+    transition: all 0.2s;
+    font-size: 9vw;
+    text-decoration: none; 
+    color: #333; 
+    font-weight:bold;
+    /* justify-content: center; */
+    
+}
+.arrow a:hover { 
+  /* font-style: blue; */
+  color: white;
+  text-decoration:underline; 
+
+} 
+.artistBlock {
+  margin: 3%;
+  /* justify-self: center; */
+  display: flex;
+
+  align-self: top;
+  height: 100%;
+  width: 75%;
+  justify-content: center;
+  align-items: center;
+  /* flex-direction: column; */
+}
+.innerArtistBlock {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
+  /* align-items: center; */
+  width:50% ;
+  padding-top: 3%;
+}
+.innerArtistBlock img {
+  width: 100%;
+  box-shadow: 1px 1px 40px black;
+  /* padding-top: 3%; */
+}
+.infoBlock {
+  margin: 30px;
+  background: linear-gradient(to top left, rgb(108, 108, 108) , darkgray);
+  width: 40%;
+  height: 50vh;
+  text-align: center;
+  
+  overflow-y: scroll;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-style: groove;
+  border-color: darkgray;
+  border-radius: 15px;
+  scrollbar-width: thin; /* Тонкие полосы прокрутки */
+    scrollbar-color: darkgrey black;
+}
+@media (max-width: 1440px) {
+  .infoBlock {
+    width: 100%;
+  }
+}
+.infoBlock::-webkit-scrollbar {
+  width: 12px; /* Ширина полосы прокрутки */
+}
+
+.infoBlock::-webkit-scrollbar-thumb {
+  background-color: #888; /* Цвет полосы прокрутки */
+}
+
+.infoBlock::-webkit-scrollbar-track {
+  background-color: #ddd; /* Цвет фона полосы прокрутки */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .artistMain { */
+
+  /* box-shadow: 0px 3px 15px black; */
+  /* padding: 3%; */
+  /* margin: %; */
+  /* text-align: center; */
+  /* justify-content: space-around; */
+  /* border-style: groove; */
+  /* display: flex; */
+  /* width:/ 80%; */
+  /* align-items: center; */
+  /* transition: all 1s; */
+  /* background-color: aqua; */
+
+  /* justify-content: space-evenly; */
+/* } */
+/* .artistBlock {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.innerBlock {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  size: 30vw;
+   */
+/* }
+@media (max-width: 1440px) {
+ .artistMain {
+  align-items: center;
+  width: 100%;
+  border-style: none;
+  box-shadow: none;
+
+ } 
+ .groupie-tracker {
+  display: none;
+ }
+}
+.innerBlock img {
+  width: 46%;
+  border-width: 0.3vw;
+}
+.infoBlock {
+  display: flex;
+  justify-content: center;
+  width: 75%;
+} */
+
+/* .artistInfo { */
+  /* width: 100%; */
+  /* font-size: 1vw; */
+  /* width: 29vw; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: top; */
+/* } */
