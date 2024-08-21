@@ -1,6 +1,7 @@
 package bigxxby
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
@@ -107,53 +108,61 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ArtistIdHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
+	if r.Method != http.MethodGet {
 		ErrorHandler(w, r, http.StatusMethodNotAllowed)
 		return
 	}
-	
 
-	route := regexp.MustCompile(`/artists/(\d+)$`) // проверка на /artist/любая цифра
+	route := regexp.MustCompile(`/artists/(\d+)$`)
 	if !route.MatchString(r.URL.Path) {
-		ErrorHandler(w, r, 404)
+		ErrorHandler(w, r, http.StatusNotFound)
 		return
 	}
 	matches := route.FindStringSubmatch(r.URL.Path)
 	if matches[1][0] == '0' {
-
-		ErrorHandler(w, r, 404)
+		ErrorHandler(w, r, http.StatusNotFound)
 		return
 	}
+
 	html, err := template.ParseFiles("templates/artist.html")
 	if err != nil {
 		fmt.Println("Internal server error", err.Error())
-		ErrorHandler(w, r, 500)
+		ErrorHandler(w, r, http.StatusInternalServerError)
 		return
 	}
 	if len(matches) < 2 {
-		// http.NotFound(w, r)
-		ErrorHandler(w, r, 404)
+		ErrorHandler(w, r, http.StatusNotFound)
 		return
 	}
 	id, err := strconv.Atoi(matches[1])
 	if err != nil {
-		// http.NotFound(w, r)
-		ErrorHandler(w, r, 404)
+		ErrorHandler(w, r, http.StatusNotFound)
 		return
 	}
 
 	if id <= 0 || id > len(artists) {
-		// http.NotFound(w, r)
-		ErrorHandler(w, r, 404)
+		ErrorHandler(w, r, http.StatusNotFound)
 		return
 	}
 
 	artist := artists[id-1]
+	artistCitiesJSON, err := json.Marshal(artist.Cities)
+	if err != nil {
+		log.Println("Error marshalling JSON:", err)
+	}
 
-	err = html.Execute(w, artist)
+	data := struct {
+		Artist     Artist
+		CitiesJSON template.JS
+	}{
+		Artist:     artist,
+		CitiesJSON: template.JS(string(artistCitiesJSON)),
+	}
+
+	err = html.Execute(w, data)
 	if err != nil {
 		log.Println(err.Error())
-		ErrorHandler(w, r, 500)
+		ErrorHandler(w, r, http.StatusInternalServerError)
 		return
 	}
 }

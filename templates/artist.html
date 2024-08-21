@@ -4,121 +4,110 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.5"> <!-- Увеличиваем масштаб до 1.5 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.5">
 	<link rel="stylesheet" href="../static/css/styles.css" href="text/css">
-	<link rel="icon" href="{{.Image}}" type="image/x-icon">
-	<title>{{.Name}}</title>
+	<link rel="icon" href="{{.Artist.Image}}" type="image/x-icon">
+	<title>{{.Artist.Name}}</title>
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1oKvYuZtTsaEFN0DOYUbqLoF6p8IlnVQ&callback=initMap"></script>
 
-
+	<style>
+		#map {
+			height: 500px;
+			width: 100%;
+			border: 2px solid gray;
+			/* Gray border around the map */
+			border-radius: 8px;
+			/* Optional: Rounded corners */
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+			/* Optional: Shadow for a subtle 3D effect */
+		}
+	</style>
 </head>
 
 <body>
 	<div class="index">
-		<div class="id" id="idArtist" name="{{ .Id}}">
-		</div>
+		<div class="id" id="idArtist" name="{{ .Artist.Id }}"></div>
 		<div class="header">
 			<div class="home">
-				<a href="/" class="custom-link">
-					HOME
-				</a>
+				<a href="/" class="custom-link">HOME</a>
 			</div>
 		</div>
-		<div class="groupie-tracker"> <strong> {{.Name}} </strong></div>
+		<div class="groupie-tracker">
+			<strong>{{.Artist.Name}}</strong>
+		</div>
 		<div class="mainBlock">
 			<div class="artistBlock">
-				<div id="arrowLeft" class="arrow">
-				</div>
+				<div id="arrowLeft" class="arrow"></div>
 				<div class="innerArtistBlock">
-					<img src="{{.Image}}" alt="img">
-					<!-- <div class="arrow" id="arrowRight">
-				</div> -->
-
-
-
-					<div class="artistName">
-						<!-- <h1>{{.Name}}</h1> -->
-					</div>
+					<img src="{{.Artist.Image}}" alt="img">
+					<ul>
+						{{ range .Artist.Cities }}
+						<li>{{ . }}</li>
+						{{ end }}
+					</ul>
+					<div class="artistName"></div>
 				</div>
-				<div class="arrow" id="arrowRight">
-				</div>
+				<div class="arrow" id="arrowRight"></div>
 			</div>
-			</h2>
+			<div id="map"></div>
+
 			<div class="infoBlock">
-				<h2 class = "dates">Members:</h2>
-				{{ range $member := .Members}}
-					<pre class="member">{{$member}}</pre> 
-
+				<h2 class="dates">Members:</h2>
+				{{ range $member := .Artist.Members }}
+				<pre class="member">{{$member}}</pre>
 				{{ end }}
-				<h2 class = "dates">First Album: 
-					<pre class="member">{{.FirstAlbum}}</pre>
-				</h2>
-				<h2 class = "dates" >Creation Date: <pre class="member">{{.CreationDate}}</pre></h2>
-
-				<h2 class = "dates">Dates and Locations</h2>
-
-				{{ range $date, $locations := .DateLocations }}
+				<h2 class="dates">First Album:</h2>
+				<pre class="member">{{.Artist.FirstAlbum}}</pre>
+				<h2 class="dates">Creation Date:</h2>
+				<pre class="member">{{.Artist.CreationDate}}</pre>
+				<h2 class="dates">Dates and Locations</h2>
+				{{ range $date, $locations := .Artist.DateLocations }}
 				<p class="date">{{ $date }}</p>
 				<ul>
 					{{ range $index, $location := $locations }}
 					<li>{{ $location }}</li>
 					{{ end }}
 				</ul>
-
-
-
-
-
-
-
-
-
-
-
-
-				</ul>
 				{{ end }}
 			</div>
 		</div>
 	</div>
 
+	<script>
+		let map;
 
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 2,
+				center: { lat: 0, lng: 0 }
+			});
+
+			const cities = JSON.parse('{{ .CitiesJSON }}'); // Ensure this is valid JSON
+			cities.forEach(city => {
+				getCoordinates(city).then(coordinates => {
+					new google.maps.Marker({
+						position: coordinates,
+						map: map,
+						title: city
+					});
+				});
+			});
+		}
+
+		async function getCoordinates(city) {
+			const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(city)}&key=AIzaSyA1oKvYuZtTsaEFN0DOYUbqLoF6p8IlnVQ`);
+			const data = await response.json();
+			if (data.results.length > 0) {
+				return {
+					lat: data.results[0].geometry.location.lat,
+					lng: data.results[0].geometry.location.lng
+				};
+			} else {
+				return { lat: 0, lng: 0 };
+			}
+		}
+	</script>
 </body>
-<script>
-	let idAr = document.getElementById('idArtist')
-	let att = parseInt(idAr.getAttribute('name'))
-
-	let left = document.createElement('a')
-	left.href = '/artists/' + String(att - 1)
-	// console.log(left.href)
-	left.textContent = '<'
-	let right = document.createElement('a')
-	right.href = '/artists/' + String(att + 1)
-	right.textContent = '>'
-
-
-	if (att == 1) {
-		left = document.createElement('div')
-		left.textContent = '<'
-		left.style.color = 'darkgrey'
-	} else if (att == 52) {
-		right = document.createElement('div')
-		right.textContent = '>'
-		right.style.color = 'darkgrey'
-
-	}
-
-	let leftArr = document.getElementById('arrowLeft')
-	let rightArr = document.getElementById('arrowRight')
-
-	leftArr.appendChild(left)
-	rightArr.appendChild(right)
-
-
-
-
-
-
-
-</script>
 
 </html>

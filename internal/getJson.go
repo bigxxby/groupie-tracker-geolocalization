@@ -16,6 +16,7 @@ type Artist struct {
 	CreationDate  int      `json:"creationDate"`
 	FirstAlbum    string   `json:"firstAlbum"`
 	DateLocations map[string][]string
+	Cities        []string `json:"cities"`
 }
 
 type Index struct {
@@ -31,8 +32,17 @@ func GetContent() []Artist {
 	artists := getArtists()
 	for i := 0; i < len(artists); i++ {
 		artists[i].DateLocations = index[i].DateLocations
+		artists[i].Cities = getCitiesFromDateLocations(index[i].DateLocations)
 	}
 	return artists
+}
+
+func getCitiesFromDateLocations(dateLocations map[string][]string) []string {
+	var cities []string
+	for city := range dateLocations {
+		cities = append(cities, city)
+	}
+	return cities
 }
 
 func getArtists() []Artist {
